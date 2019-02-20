@@ -3,8 +3,8 @@
 
 from collections import Counter
 
-with open('../data/hightemp.txt') as f19:
-    list_line = [line.split('\t')[0] for line in f19]
+with open('../data/hightemp.txt') as f:
+    list_line = [line.split('\t')[0] for line in f]
     for pref, count_pref in Counter(list_line).most_common(): print(count_pref, pref)
 
 # UNIXコマンド

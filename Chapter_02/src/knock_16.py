@@ -3,7 +3,7 @@
 
 num_split = int(input())
 num_line = sum(1 for _ in open('../data/hightemp.txt'))
-with open('../data/hightemp.txt') as f16:
+with open('../data/hightemp.txt') as f:
     for num in [(num_line + i) // num_split for i in range(num_split)]:
-        for _ in range(num): print(f16.readline().rstrip())
+        for _ in range(num): print(f.readline().rstrip())
         print()
