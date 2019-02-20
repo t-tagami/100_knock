@@ -4,7 +4,6 @@
 from knock_30 import parse
 from itertools import chain, islice
 
-sa_irregular_nouns = {word['base'] for word in chain.from_iterable(parse()) if word['pos1'] == "サ変接続"}
-
-for i in islice(sa_irregular_nouns, 10):
-    print(i)
+sa_irregular_nouns = {word['base'] for word in chain.from_iterable(parse())
+                      if word['pos1'] == "サ変接続"}
+for i in islice(sa_irregular_nouns, 10): print(i)

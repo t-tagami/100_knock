@@ -8,6 +8,6 @@ noun_phrases = set()
 for sent in parse():
     for idx in range(len(sent) - 2):
         if sent[idx]['pos'] == '名詞' and sent[idx+2]['pos'] == '名詞' and sent[idx+1]['surface'] == 'の':
-            noun_phrases.add('{}{}{}'.format(sent[idx]['surface'], 'の', sent[idx+2]['surface']))
+            noun_phrases.add(f"{sent[idx]['surface']}{'の'}{sent[idx+2]['surface']}")
 
 for i in islice(noun_phrases, 10): print(i)

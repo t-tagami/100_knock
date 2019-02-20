@@ -2,7 +2,7 @@
 # 文章中に出現する単語とその出現頻度を求め，出現頻度の高い順に並べよ．
 
 from knock_30 import parse
-from itertools import chain, islice
+from itertools import chain
 from collections import Counter
 import re
 
