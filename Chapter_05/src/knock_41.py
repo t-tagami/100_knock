@@ -27,7 +27,7 @@ class Chunk():
 		"""
 		for chunk in chunk_list:
 			if chunk.dst != -1:
-				chunk_list[chunk.dst].srcs.append(chunk.dst)
+				chunk_list[chunk.dst].srcs.append(chunk.idx)
 
 	@classmethod
 	def sent_to_chunk_object_list(cls, sent):
@@ -52,19 +52,45 @@ class Chunk():
 	def check_contain_pos(self, pos):
 		return any(morph.pos == pos for morph in self.morphs)
 
+	def check_contain_pos1(self, pos1):
+		return any(morph.pos1 == pos1 for morph in self.morphs)
+
+	def check_contain_sahen_wo(self):
+		for i in range(len(self.morphs) - 1):
+			if self.morphs[i].pos1 == 'サ変接続' and self.morphs[i + 1].surface == 'を':
+				return True
+		return False
+
+	def check_contain_word(self, surface, pos):
+		return any(morph.pos == pos and morph.surface == surface for morph in self.morphs)
+
 	def get_surface_pos(self, pos):
 		for morph in self.morphs:
 			if morph.pos == pos: return morph.surface
-		return ''
 
 	def get_left_base(self, pos):
 		for morph in self.morphs:
 			if morph.pos == pos:
 				return morph.base
 
+	def get_morph_surface(self):
+		return ''.join(morph.surface for morph in self.morphs if morph.pos != '記号' and morph.pos != '空白')
+
+	@classmethod
+	def get_idx(cls, sent, pos):
+		return [chunk.idx for chunk in sent if chunk.check_contain_pos(pos)]
+
+	def replace_surface(self, char):
+		surfaces = ''
+		for morph in self.morphs:
+			if morph.pos == '名詞':
+				surfaces += char
+			elif morph.pos != '記号':
+				surfaces += morph.surface.lstrip('\u3000X')
+		return surfaces
 
 def main():
-	for sent in nth(3, Chunk.make_chunk_object_list()):
+	for sent in nth(7, Chunk.make_chunk_object_list()):
 		print('係り先 {:2d}\t係り元 {}\t{}'.format(sent.dst, sent.srcs, sent))
 
 

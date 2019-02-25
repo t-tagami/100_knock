@@ -21,6 +21,6 @@ from knock_41 import Chunk
 for sent in Chunk.make_chunk_object_list():
     for chunk in filter(lambda x:x.check_contain_pos('動詞'), sent):
         particles = ' '.join(sent[src].get_surface_pos('助詞') for src in chunk.srcs
-                            if chunk.check_contain_pos('助詞'))
+                            if sent[src].check_contain_pos('助詞'))
         if particles:
             print('{:10}\t{}'.format(chunk.get_left_base('動詞'), particles))
